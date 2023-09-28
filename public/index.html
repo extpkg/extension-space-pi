@@ -78,18 +78,8 @@
 				color: #fff;	
 			}
 			
-			p.desc {
-				color: #666;
-				font-size: 11px;
-				margin: 0 0 20px;
-			}
-			
-			p.desc a {
-				color: #999;	
-			}
-			
-			p.desc a:hover {
-				color: #fff;	
+			div.desc {
+        height: 20px;
 			}
 			
 			/*============================================================================================*/
@@ -946,7 +936,7 @@
 			
 			<div id="main" class="menu">								
 				<h1><strong>Space</strong>Pi</h1>
-				<p class="desc">Created by <a href="http://jackrugile.com" target="_blank">Jack Rugile</a> for <a href="http://js13kgames.com/" target="_blank">js13kGames</a></p>
+				<div class="desc"></div>
 				
 				<div id="no-can">
 					<div class="divider"></div>	
@@ -1215,7 +1205,7 @@
 					<a href="#" rel="0" class="level button"><span>1<i>P</i><small class="level-score"></small></span><p class="tip">"Noobs Welcome"<br/><strong>$5</strong>/Coin</p></a>
 					<a href="#" rel="1" class="level button"><span>2<i>P</i><small class="level-score"></small></span><p class="tip">"No Sweat"</strong><br/><strong>$10</strong>/Coin</p></a>
 					<a href="#" rel="2" class="level button"><span>3<i>P</i><small class="level-score"></small></span><p class="tip">"Yep, Still Easy"<br/><strong>$15</strong>/Coin</p></a>
-					<a href="#" rel="3" class="level button"><span>4<i>P</i><small class="level-score"></small></span><p class="tip">"Piece of js13cake"<br/><strong>$20</strong>/Coin</p></a>
+					<a href="#" rel="3" class="level button"><span>4<i>P</i><small class="level-score"></small></span><p class="tip">"Piece of cake"<br/><strong>$20</strong>/Coin</p></a>
 					<a href="#" rel="4" class="level button"><span>5<i>P</i><small class="level-score"></small></span><p class="tip">"You Got This"<br/><strong>$25</strong>/Coin</p></a>
 					<a href="#" rel="5" class="level button"><span>6<i>P</i><small class="level-score"></small></span><p class="tip">"Ok, Some Sweat"<br/><strong>$30</strong>/Coin</p></a>
 					<a href="#" rel="6" class="level button"><span>7<i>P</i><small class="level-score"></small></span><p class="tip">"Wait, Hold On"<br/><strong>$35</strong>/Coin</p></a>
@@ -1275,7 +1265,7 @@
 			</div>
 			<div id="overall-stats" class="menu">	
 				<h1><strong>Space</strong>Pi</h1>
-				<p class="desc">Created by <a href="http://jackrugile.com" target="_blank">Jack Rugile</a> for <a href="http://js13kgames.com/" target="_blank">js13kGames</a></p>
+				<div class="desc"></div>
 				<div class="divider"></div>
 				<table>
 					<tr>
@@ -2599,9 +2589,10 @@
 					// render top left text
 					self.ctx.fillStyle = '#aaa';		
 					self.ctx.textAlign = 'left';
-					self.ctx.font = 'bold 10px arial';	
-					self.ctx.fillText('Completion: '+self.ui.ratioComplete+' ('+self.ui.percentComplete+'%)', 12, 20);			
-					self.ctx.fillText('Power: '+Math.round(self.power.current)+'/'+self.power.capacity+' ('+Math.round((self.power.current/self.power.capacity) * 100)+'%)', 156, 20);
+					self.ctx.font = 'bold 10px arial';
+          // FIXME: ADD CONDITION FOR NON MAC USERS (can't get os for some reason)
+					self.ctx.fillText('Completion: '+self.ui.ratioComplete+' ('+self.ui.percentComplete+'%)', 82, 20);			
+					self.ctx.fillText('Power: '+Math.round(self.power.current)+'/'+self.power.capacity+' ('+Math.round((self.power.current/self.power.capacity) * 100)+'%)', 226, 20);
 					
 					// render top right text
 						// determine current score
@@ -2642,45 +2633,48 @@
 					
 					// render level bar
 					self.ctx.fillStyle = '#222';
-					self.ctx.fillRect(12, 30, 120, 8);		
+          //                x   y   w    h
+					self.ctx.fillRect(82, 30, 120, 8);		
 					self.ctx.fillStyle = 'hsl('+self.levelHue+', '+(50+(self.base.radius/self.base.goal)*50)+'%, '+(50+((Math.abs(180-self.base.goalPulseAngle))/180)*20)+'%)';
-					self.ctx.fillRect(12, 30, (self.base.radius/self.base.goal)*120, 8);
-					// bar highlight
-					var grad = self.ctx.createLinearGradient(12, 30, 12, 34);
+          //                x   y   w                                      h
+					self.ctx.fillRect(82, 30, (self.base.radius/self.base.goal)*120, 8);
+					// bar highlight                         x   y   w   h
+					var grad = self.ctx.createLinearGradient(82, 30, 12, 34);
 					grad.addColorStop(0, 'rgba(255,255,255,0)');
 					grad.addColorStop(1, 'rgba(255,255,255,.2)');		
 					self.ctx.fillStyle = grad;
-					self.ctx.fillRect(12, 30, 120, 4);			
+          //                x   y   w    h
+					self.ctx.fillRect(82, 30, 120, 4);			
 					
 					// render power bar
 					self.ctx.fillStyle = '#222';
-					self.ctx.fillRect(156, 30, 120, 8);		
+					self.ctx.fillRect(226, 30, 120, 8);		
 					self.ctx.fillStyle = 'hsl(0, 0%, '+(((self.power.current/self.power.capacity)*60))+'%)';
-					self.ctx.fillRect(156, 30, (self.power.current/self.power.capacity)*120, 8);
+					self.ctx.fillRect(226, 30, (self.power.current/self.power.capacity)*120, 8);
 					// bar highlight
-					grad = self.ctx.createLinearGradient(156, 30, 156, 34);
+					grad = self.ctx.createLinearGradient(226, 30, 156, 34);
 					grad.addColorStop(0, 'rgba(255,255,255,0)');
 					grad.addColorStop(1, 'rgba(255,255,255,.2)');		
 					self.ctx.fillStyle = grad;
-					self.ctx.fillRect(156, 30, 120, 4);
+					self.ctx.fillRect(226, 30, 120, 4);
 					
 					// render powerup bar and text
 					if(self.pwrupActive){
 						self.ctx.fillStyle = '#aaa';		
 						self.ctx.textAlign = 'left';
 						self.ctx.font = 'bold 10px arial';
-						self.ctx.fillText(self.powerupRef[self.powerupType].name, 300, 20);
+						self.ctx.fillText(self.powerupRef[self.powerupType].name, 370, 20);
 						
 						self.ctx.fillStyle = '#222';
-						self.ctx.fillRect(300, 30, 120, 8);		
+						self.ctx.fillRect(370, 30, 120, 8);		
 						self.ctx.fillStyle = 'hsl('+self.powerupRef[self.powerupType].hue+', 100%, '+(20+((self.pwrupTimer/self.pwrupTimerMax)*30))+'%)';
-						self.ctx.fillRect(300, 30, (self.pwrupTimer/self.pwrupTimerMax)*120, 8);
+						self.ctx.fillRect(370, 30, (self.pwrupTimer/self.pwrupTimerMax)*120, 8);
 						// bar highlight
-						grad = self.ctx.createLinearGradient(300, 30, 300, 34);
+						grad = self.ctx.createLinearGradient(370, 30, 300, 34);
 						grad.addColorStop(0, 'rgba(255,255,255,0)');
 						grad.addColorStop(1, 'rgba(255,255,255,.2)');		
 						self.ctx.fillStyle = grad;
-						self.ctx.fillRect(300, 30, 120, 4);
+						self.ctx.fillRect(370, 30, 120, 4);
 					}
 				}
 				
