@@ -802,6 +802,30 @@
         text-align: center;
       }
 
+      .level-list .button .tip.first {
+        left: 150%;
+      }
+
+      .level-list .button .tip.first::before {
+        left: 23%;
+      }
+
+      .level-list .button .tip.first::after {
+        left: 23%;
+      }
+
+      .level-list .button .tip.last {
+        left: -50%;
+      }
+
+      .level-list .button .tip.last::before {
+        left: 77%;
+      }
+
+      .level-list .button .tip.last::after {
+        left: 77%;
+      }
+
       .level-list .button:hover .tip {
         display: block;
       }
@@ -1449,7 +1473,9 @@
             rel="0"
             class="level button"
             ><span>1<i>P</i><small class="level-score"></small></span>
-            <p class="tip">"Noobs Welcome"<br /><strong>$5</strong>/Coin</p></a
+            <p class="tip first">
+              "Noobs Welcome"<br /><strong>$5</strong>/Coin
+            </p></a
           >
           <a
             href="#"
@@ -1543,7 +1569,7 @@
             rel="12"
             class="level button"
             ><span>13<i>P</i><small class="level-score"></small></span>
-            <p class="tip">
+            <p class="tip last">
               "Hope You're Not as<br />Sensitive as Your Mouse"<br /><strong
                 >$65</strong
               >/Coin

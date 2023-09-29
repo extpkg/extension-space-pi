@@ -3,7 +3,7 @@
   "name": "SpacePi",
   "short_name": "SpacePi",
   "description": "Protect your space base from unknown dangers in SpacePi's mysterious journey.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "EXT, Inc.",
   "icons": {
     "128": "./assets/128.png",
