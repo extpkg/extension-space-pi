@@ -38,26 +38,19 @@ ext.runtime.onExtensionClick.addListener(async () => {
   let tab: ext.tabs.Tab | null = null;
 
   try {
-    // const isDarkMode = await ext.windows.getPlatformDarkMode();
-
     tab = await ext.tabs.create({
       text: title,
       icon: "./assets/128.png",
-      // mutable: true,
-      // icon_dark: "./assets/128-dark.png",
     });
-
-    const { os } = await ext.runtime.getPlatformInfo();
 
     window = await ext.windows.create({
       center: true,
-      // darkMode: isDarkMode,
       fullscreenable: false,
       title: title,
-      // icon: isDarkMode ? "./assets/128.png" : "./assets/128-dark.png",
+      icon: "./assets/128.png",
       vibrancy: false,
-      frame: os !== "mac",
-      titleBarStyle: os === "mac" ? "inset" : undefined,
+      frame: false,
+      titleBarStyle: "inset",
       width: 960,
       height: 600,
       aspectRatio: 960 / 600,
@@ -150,13 +143,3 @@ ext.windows.onRemoved.addListener(async () => {
     console.log(error, "ext.windows.onRemoved");
   }
 });
-
-// ext.windows.onUpdatedDarkMode.addListener(async (event, details) => {
-//   try {
-//     await ext.windows.update(event.id, {
-//       icon: details.enabled ? "./assets/128.png" : "./assets/128-dark.png",
-//     });
-//   } catch (error) {
-//     console.log(error, "ext.windows.onUpdatedDarkMode");
-//   }
-// });
