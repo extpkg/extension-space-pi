@@ -1,6 +1,6 @@
 {
   "name": "extension-space-pi",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Protect your space base from unknown dangers in SpacePi's mysterious journey.",
   "type": "module",
   "scripts": {

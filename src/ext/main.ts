@@ -57,12 +57,18 @@ ext.runtime.onExtensionClick.addListener(async () => {
       resizable: false,
     });
 
-    const contentSize = await ext.windows.getContentSize(window.id);
+    const permissions = await ext.runtime.getPermissions();
+    const persistent =
+      (permissions["websessions"] ?? {})["create.persistent"]?.granted ?? false;
 
     websession = await ext.websessions.create({
       partition: title,
+      persistent,
       global: false,
     });
+
+    const contentSize = await ext.windows.getContentSize(window.id);
+
     webview = await ext.webviews.create({
       window,
       websession,
