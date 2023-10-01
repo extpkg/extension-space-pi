@@ -610,6 +610,19 @@
         display: block;
       }
 
+      .upgrade-group .upgrade:first-of-type .tip {
+        top: 115%;
+        bottom: auto;
+        background: linear-gradient(#000, #222);
+      }
+
+      .upgrade-group .upgrade:first-of-type .tip::before,
+      .upgrade-group .upgrade:first-of-type .tip::after {
+        top: auto;
+        bottom: 100%;
+        transform: scale(1, -1);
+      }
+
       .up-list .button.disabled {
         cursor: default;
         opacity: 1;
