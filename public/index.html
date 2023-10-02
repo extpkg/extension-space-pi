@@ -1041,6 +1041,39 @@
         z-index: 2;
         -webkit-app-region: drag;
       }
+
+      #reset-game-data-group {
+        display: flex;
+        width: 348px;
+        gap: 10px;
+        margin: 0 auto;
+      }
+
+      #reset-game-data-group #reset-game-data-button-confirm {
+        background-image: linear-gradient(#8e3c3c, #692121);
+        border: 1px solid #5e1e1e;
+        box-shadow: 0 1px 0 #8e3c3c;
+      }
+
+      #reset-game-data-group #reset-game-data-button-confirm span {
+        box-shadow: inset 0 1px 0 #8e3c3c;
+        color: #e2a5a5;
+      }
+
+      #reset-game-data-group #reset-game-data-button-confirm:hover span {
+        background: rgba(142, 60, 60, 0.15);
+        color: #fff;
+      }
+
+      #reset-game-data-group #reset-game-data-button-confirm:active span {
+        background: #692121;
+        box-shadow: inset 0 0 10px #5e1e1e;
+        color: #c57878;
+      }
+
+      .hidden {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
@@ -1173,6 +1206,23 @@
             id="reset-game-data-button"
             ><span>Reset Game Data</span></a
           >
+          <div
+            id="reset-game-data-group"
+            class="hidden"
+          >
+            <a
+              href="#"
+              class="button"
+              id="reset-game-data-button-cancel"
+              ><span>Cancel</span></a
+            >
+            <a
+              href="#"
+              class="button"
+              id="reset-game-data-button-confirm"
+              ><span>Confirm</span></a
+            >
+          </div>
         </div>
         <!-- end #home-wrap -->
       </div>
@@ -3833,6 +3883,13 @@
         self.resumeLevelButton = self.get("resume-level-button");
         self.quitLevelButton = self.get("quit-level-button");
         self.resetGameDataButton = self.get("reset-game-data-button");
+        self.resetGameDataGroup = self.get("reset-game-data-group");
+        self.resetGameDataButtonCancel = self.get(
+          "reset-game-data-button-cancel",
+        );
+        self.resetGameDataButtonConfirm = self.get(
+          "reset-game-data-button-confirm",
+        );
         self.overallStatsButton = self.get("overall-stats-button");
         self.upgradeButtons = doc.querySelectorAll(".upgrade");
         self.levelButtons = doc.querySelectorAll(".level");
@@ -3923,13 +3980,25 @@
 
         self.resetGameDataCB = function (e) {
           e.preventDefault();
-          // TODO: create custom confirmation modal
-          var confirmation = confirm(
-            "Are you sure you want to reset your game data? This cannot be undone.",
-          );
-          if (confirmation) {
-            self.clearUser();
-          }
+
+          self.resetGameDataButton.classList.add("hidden");
+          self.resetGameDataGroup.classList.remove("hidden");
+        };
+
+        self.resetGameDataCancelCB = function (e) {
+          e.preventDefault();
+
+          self.resetGameDataButton.classList.remove("hidden");
+          self.resetGameDataGroup.classList.add("hidden");
+        };
+
+        self.resetGameDataConfirmCB = function (e) {
+          e.preventDefault();
+
+          self.clearUser();
+
+          self.resetGameDataButton.classList.remove("hidden");
+          self.resetGameDataGroup.classList.add("hidden");
         };
 
         self.upgradeButtonCB = function (e) {
@@ -4105,6 +4174,16 @@
           self.resetGameDataButton.addEventListener(
             "click",
             self.resetGameDataCB,
+            false,
+          );
+          self.resetGameDataButtonCancel.addEventListener(
+            "click",
+            self.resetGameDataCancelCB,
+            false,
+          );
+          self.resetGameDataButtonConfirm.addEventListener(
+            "click",
+            self.resetGameDataConfirmCB,
             false,
           );
           self.overallStatsButton.addEventListener(
