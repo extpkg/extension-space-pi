@@ -1037,7 +1037,7 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 32px;
+        height: 40px;
         background-color: transparent;
         z-index: 2;
         -webkit-app-region: drag;
@@ -1765,6 +1765,8 @@
         var self = this;
         var doc = document;
 
+        self.os = "";
+
         /*============================================================================================*/
         /* Utility / Mathematical / Miscellaneous */
         /*============================================================================================*/
@@ -1904,6 +1906,9 @@
         /* Initialize Game */
         /*============================================================================================*/
         self.initGame = function () {
+          ext.runtime.getPlatformInfo().then((info) => {
+            self.os = info.os;
+          });
           self.gameWrap = self.get("game-wrap");
           self.c = self.get("c");
           doc.onselectstart = function () {
@@ -3515,7 +3520,7 @@
               " (" +
               self.ui.percentComplete +
               "%)",
-            82,
+            self.os === "mac" ? 82 : 12,
             20,
           );
           self.ctx.fillText(
@@ -3526,7 +3531,7 @@
               " (" +
               Math.round((self.power.current / self.power.capacity) * 100) +
               "%)",
-            226,
+            self.os === "mac" ? 226 : 156,
             20,
           );
 
@@ -3551,7 +3556,11 @@
           self.ctx.textAlign = "right";
           self.ctx.font = "bold 10px arial";
           var profitLabelW = self.ctx.measureText("Profit");
-          self.ctx.fillText("Profit", self.cw - 12, 20);
+          self.ctx.fillText(
+            "Profit",
+            self.cw - (self.os === "mac" ? 12 : 122),
+            20,
+          );
 
           self.ctx.fillStyle = "#fff";
           self.ctx.font = "bold 12px arial";
@@ -3560,7 +3569,7 @@
           );
           self.ctx.fillText(
             "$" + self.commas(self.levelStats.profit),
-            self.cw - 12,
+            self.cw - (self.os === "mac" ? 12 : 122),
             37,
           );
 
@@ -3570,20 +3579,24 @@
           self.ctx.fillStyle = "#aaa";
           self.ctx.textAlign = "right";
           self.ctx.font = "bold 10px arial";
-          self.ctx.fillText("Score", self.cw - maxProfitW - 36, 20);
+          self.ctx.fillText(
+            "Score",
+            self.cw - maxProfitW - (self.os === "mac" ? 36 : 146),
+            20,
+          );
 
           self.ctx.fillStyle = "#fff";
           self.ctx.font = "bold 12px arial";
           self.ctx.fillText(
             self.commas(Math.round(displayScore)),
-            self.cw - maxProfitW - 36,
+            self.cw - maxProfitW - (self.os === "mac" ? 36 : 146),
             37,
           );
           console.log(self.os);
           // render level bar
           self.ctx.fillStyle = "#222";
           //                x   y   w    h
-          self.ctx.fillRect(82, 30, 120, 8);
+          self.ctx.fillRect(self.os === "mac" ? 82 : 12, 30, 120, 8);
           self.ctx.fillStyle =
             "hsl(" +
             self.levelHue +
@@ -3594,48 +3607,62 @@
             "%)";
           //                x   y   w                                      h
           self.ctx.fillRect(
-            82,
+            self.os === "mac" ? 82 : 12,
             30,
             (self.base.radius / self.base.goal) * 120,
             8,
           );
           // bar highlight                         x   y   w   h
-          var grad = self.ctx.createLinearGradient(82, 30, 12, 34);
+          var grad = self.ctx.createLinearGradient(
+            self.os === "mac" ? 82 : 12,
+            30,
+            12,
+            34,
+          );
           grad.addColorStop(0, "rgba(255,255,255,0)");
           grad.addColorStop(1, "rgba(255,255,255,.2)");
           self.ctx.fillStyle = grad;
           //                x   y   w    h
-          self.ctx.fillRect(82, 30, 120, 4);
+          self.ctx.fillRect(self.os === "mac" ? 82 : 12, 30, 120, 4);
 
           // render power bar
           self.ctx.fillStyle = "#222";
-          self.ctx.fillRect(226, 30, 120, 8);
+          self.ctx.fillRect(self.os === "mac" ? 226 : 156, 30, 120, 8);
           self.ctx.fillStyle =
             "hsl(0, 0%, " +
             (self.power.current / self.power.capacity) * 60 +
             "%)";
           self.ctx.fillRect(
-            226,
+            self.os === "mac" ? 226 : 156,
             30,
             (self.power.current / self.power.capacity) * 120,
             8,
           );
           // bar highlight
-          grad = self.ctx.createLinearGradient(226, 30, 156, 34);
+          grad = self.ctx.createLinearGradient(
+            self.os === "mac" ? 226 : 156,
+            30,
+            156,
+            34,
+          );
           grad.addColorStop(0, "rgba(255,255,255,0)");
           grad.addColorStop(1, "rgba(255,255,255,.2)");
           self.ctx.fillStyle = grad;
-          self.ctx.fillRect(226, 30, 120, 4);
+          self.ctx.fillRect(self.os === "mac" ? 226 : 156, 30, 120, 4);
 
           // render powerup bar and text
           if (self.pwrupActive) {
             self.ctx.fillStyle = "#aaa";
             self.ctx.textAlign = "left";
             self.ctx.font = "bold 10px arial";
-            self.ctx.fillText(self.powerupRef[self.powerupType].name, 370, 20);
+            self.ctx.fillText(
+              self.powerupRef[self.powerupType].name,
+              self.os === "mac" ? 370 : 300,
+              20,
+            );
 
             self.ctx.fillStyle = "#222";
-            self.ctx.fillRect(370, 30, 120, 8);
+            self.ctx.fillRect(self.os === "mac" ? 370 : 300, 30, 120, 8);
             self.ctx.fillStyle =
               "hsl(" +
               self.powerupRef[self.powerupType].hue +
@@ -3643,13 +3670,18 @@
               (20 + (self.pwrupTimer / self.pwrupTimerMax) * 30) +
               "%)";
             self.ctx.fillRect(
-              370,
+              self.os === "mac" ? 370 : 300,
               30,
               (self.pwrupTimer / self.pwrupTimerMax) * 120,
               8,
             );
             // bar highlight
-            grad = self.ctx.createLinearGradient(370, 30, 300, 34);
+            grad = self.ctx.createLinearGradient(
+              self.os === "mac" ? 370 : 300,
+              30,
+              300,
+              34,
+            );
             grad.addColorStop(0, "rgba(255,255,255,0)");
             grad.addColorStop(1, "rgba(255,255,255,.2)");
             self.ctx.fillStyle = grad;
@@ -4326,6 +4358,13 @@
         var noCanvas = document.getElementById("no-can");
         homeWrap.style.display = "none";
         noCanvas.style.display = "block";
+      }
+    </script>
+    <script type="module">
+      const platformInfo = await ext.runtime.getPlatformInfo();
+
+      if (platformInfo.os !== "mac") {
+        document.getElementById("frame").style.right = "105px";
       }
     </script>
   </body>
