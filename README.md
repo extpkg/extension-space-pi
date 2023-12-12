@@ -13,3 +13,6 @@ Protect your space base from unknown dangers in SpacePi's mysterious journey.
 
 Run `npm run dev` to watch `src` and `public` directories and rebuild the
 project on changes
+
+## Source
+https://github.com/jackrugile/SpacePi-js13k
